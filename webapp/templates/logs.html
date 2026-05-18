@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Logs</h1>
+<div class="card">
+    <p>Parser logs are available with:</p>
+    <pre>docker compose logs parser</pre>
+    <p>Web application logs are available with:</p>
+    <pre>docker compose logs webapp</pre>
+</div>
+{% endblock %}

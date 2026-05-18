@@ -1,0 +1,5 @@
+[
+  {"league": "Premier League", "homeTeam": "Arsenal", "awayTeam": "Chelsea", "score": {"fullTime": {"home": 2, "away": 1}}, "utcDate": "2026-05-01T18:00:00Z"},
+  {"league": "Premier League", "homeTeam": "Liverpool", "awayTeam": "Manchester City", "score": {"fullTime": {"home": 3, "away": 3}}, "utcDate": "2026-05-02T16:30:00Z"},
+  {"league": "La Liga", "homeTeam": "Barcelona", "awayTeam": "Real Madrid", "score": {"fullTime": {"home": 1, "away": 2}}, "utcDate": "2026-05-03T19:00:00Z"}
+]

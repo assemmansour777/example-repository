@@ -1,0 +1,88 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: football_postgres
+    environment:
+      POSTGRES_DB: football
+      POSTGRES_USER: football_user
+      POSTGRES_PASSWORD: football_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U football_user -d football"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  parser:
+    build: ./parser
+    container_name: football_parser
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: football
+      POSTGRES_USER: football_user
+      POSTGRES_PASSWORD: football_password
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  webapp:
+    build: ./webapp
+    container_name: football_webapp
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: football
+      POSTGRES_USER: football_user
+      POSTGRES_PASSWORD: football_password
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "5050:5000"
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: football_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+      SCRIPT_NAME: /pgadmin
+    depends_on:
+      - postgres
+    ports:
+      - "5051:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  metabase:
+    image: metabase/metabase:v0.50.27
+    container_name: football_metabase
+    environment:
+      MB_SITE_URL: http://localhost/metabase/
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    volumes:
+      - metabase_data:/metabase-data
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: football_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - webapp
+      - pgadmin
+      - metabase
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  metabase_data:

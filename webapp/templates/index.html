@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <h1>Football Data Aggregator</h1>
+    <p>Collect, normalize, store and visualize football match data from multiple sources.</p>
+</section>
+
+<section class="grid">
+    <div class="card">
+        <h2>Top Teams</h2>
+        <table>
+            <tr><th>League</th><th>Team</th><th>Points</th><th>GF</th><th>GA</th></tr>
+            {% for row in stats %}
+            <tr><td>{{ row.league }}</td><td>{{ row.team }}</td><td>{{ row.points }}</td><td>{{ row.goals_for }}</td><td>{{ row.goals_against }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="card">
+        <h2>Latest Matches</h2>
+        <table>
+            <tr><th>Date</th><th>League</th><th>Match</th><th>Score</th></tr>
+            {% for m in matches %}
+            <tr>
+                <td>{{ m.match_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ m.league }}</td>
+                <td>{{ m.home_team }} vs {{ m.away_team }}</td>
+                <td>{{ m.home_goals }} - {{ m.away_goals }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</section>
+{% endblock %}

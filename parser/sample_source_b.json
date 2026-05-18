@@ -1,0 +1,7 @@
+{
+  "matches": [
+    {"competition": "Premier League", "team_home": "Tottenham", "team_away": "Newcastle", "goals_home": 0, "goals_away": 0, "date": "2026-05-04 15:00:00"},
+    {"competition": "Serie A", "team_home": "Inter", "team_away": "Juventus", "goals_home": 2, "goals_away": 2, "date": "2026-05-05 20:00:00"},
+    {"competition": "Bundesliga", "team_home": "Bayern Munich", "team_away": "Dortmund", "goals_home": 4, "goals_away": 2, "date": "2026-05-06 18:30:00"}
+  ]
+}
